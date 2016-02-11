@@ -28,6 +28,8 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
         textInput = ((EditText) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.body));
     }
 
+
+
     //makeTweet(text) fills in the input text field and clicks the 'save' button for the activity under test:
     private void makeTweet(String text) {
         assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save));
@@ -37,6 +39,20 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
 
     //
     //
+    @UiThreadTest
+    public void testMakeTweet() {
+        LonelyTwitterActivity lonelyTwitterActivity = (LonelyTwitterActivity ) getActivity();
+        int oldLength = lonelyTwitterActivity.getAdapter().getCount();
+        makeTweet("Tweet 1");
+        ArrayAdapter<Tweet> array = lonelyTwitterActivity.getAdapter();
+        assertEquals("New tweet not there", oldLength + 1, array.getCount());
+
+        assertTrue("Not a tweet", array.getItem(array.getCount() - 1) instanceof Tweet);
+
+        Tweet tweet = array.getItem(array.getCount() - 1);
+        assertEquals("Not the text expected", tweet.getMessage(), "Tweet 1");
+    }
+
 
     //
     //
