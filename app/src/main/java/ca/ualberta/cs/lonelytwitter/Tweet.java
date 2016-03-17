@@ -36,7 +36,25 @@ public abstract class Tweet {
         this.message = message;
         this.date = new Date();
     }
+    protected transient Bitmap thumbnail;
+    protected String thumbnail64;
 
+    public void addThumbnail (Bitmap newThumbnail) {
+        if (newThumbnail != null) {
+            thumbnail = newThumbnail;
+            ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+            newThumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+            byte[] b = byteArray.toByteArray();
+            thumbnail64 = Base64.encodeToString(b, Base64.DEFAULT);
+        }
+    }
+    public Bitmap getThumbnail() {
+        if (thumbnail == null && thumbnail64 != null) {
+            byte[] decode = Base64.decode(thumbnail64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decode, 0, decode.length);
+        }
+        return thumbnail;
+    }
     public abstract Boolean isImportant();
 
     public Date getDate() {
