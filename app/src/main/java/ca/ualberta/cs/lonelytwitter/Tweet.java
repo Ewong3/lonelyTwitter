@@ -1,13 +1,31 @@
 package ca.ualberta.cs.lonelytwitter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
-/**
- * Created by romansky on 1/12/16.
- */
+import io.searchbox.annotations.JestId;
+
 public abstract class Tweet {
+    @JestId
+    protected String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     protected Date date;
     protected String message;
+
 
     public Tweet(Date date, String message) {
         this.date = date;

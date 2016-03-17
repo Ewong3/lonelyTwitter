@@ -64,7 +64,6 @@ public class LonelyTwitterActivity extends Activity {
 
 	// http://stackoverflow.com/questions/11835251/remove-image-resource-of-imagebutton
 
-
                 setResult(RESULT_OK);
             }
         });
