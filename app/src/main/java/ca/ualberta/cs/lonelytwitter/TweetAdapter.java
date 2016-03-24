@@ -45,7 +45,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetText.setText(message);
         tweetDate.setText(dateString);
 //        if(thumbnail != null) {
-            // Only add it if it's null.
+            // Only addStuff it if it's null.
             tweetImage.setImageBitmap(thumbnail);
 //        }
 

@@ -5,7 +5,6 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -32,7 +31,8 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
     private void makeTweet(String text) {
         assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.saveButton));
         textInput.setText(text);
-        ((Button) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.saveButton)).performClick();
+        // Removed redundant cast
+        activity.findViewById(R.id.saveButton).performClick();
     }
 
     @UiThreadTest

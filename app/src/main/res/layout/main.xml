@@ -5,11 +5,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <!-- Changed the text from being hardcoded, easier to change, all in the string file -->
     <TextView
         android:id="@+id/tweetsTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="My old tweets" />
+        android:text="@string/TextView_Main_Title" />
 
     <ListView
         android:id="@+id/tweetsList"

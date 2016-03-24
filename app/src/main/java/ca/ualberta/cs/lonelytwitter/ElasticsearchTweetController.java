@@ -45,14 +45,17 @@ public class ElasticsearchTweetController {
 
             /* NEW! */
             String search_string;
-            if(params[0] == "") {
+
+            // Changed from '==' to .equals() for correct String comparison
+            if(params[0].equals("")) {
                 search_string = "{\"from\":0,\"size\":10000, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
             } else {
                 // The following gets the top 10000 tweets matching the string passed in
                 search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}}, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
             }
 
-            Search search = new Search.Builder(search_string).addIndex("testing").addType("tweet").build();
+            String testing = "testing";
+            Search search = new Search.Builder(search_string).addIndex(testing).addType("tweet").build();
             try {
                 SearchResult execute = client.execute(search);
                 if(execute.isSucceeded()) {
@@ -94,7 +97,7 @@ public class ElasticsearchTweetController {
         }
     }
 
-    // If no client, add one
+    // If no client, addStuff one
     public static void verifyConfig() {
         if(client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://krasmuss-cmput301.rhcloud.com");

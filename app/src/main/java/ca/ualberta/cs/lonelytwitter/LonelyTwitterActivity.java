@@ -19,13 +19,12 @@ public class LonelyTwitterActivity extends Activity {
 
     private EditText bodyText;
     private ListView oldTweetsList;
-
+    // Moved the ArrayList<Tweet> tweets to be local, it
+    // is not used anywhere and can accidentally be changed
     private TweetList myTweets;
-    private ArrayList<Tweet> tweets;
     private ArrayAdapter<Tweet> adapter;
 
-    private Button saveButton;
-
+    // Save button changed to be local.
     public ArrayAdapter<Tweet> getAdapter() {
         return adapter;
     }
@@ -59,14 +58,14 @@ public class LonelyTwitterActivity extends Activity {
             }
         });
 
-        saveButton = (Button) findViewById(R.id.saveButton);
+        Button saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 String text = bodyText.getText().toString();
                 NormalTweet latestTweet = new NormalTweet(text);
 
-                myTweets.add(latestTweet);
+                myTweets.addStuff(latestTweet);
 
                 latestTweet.addThumbnail(thumbnail);
                 adapter.insert(latestTweet, 0);
@@ -77,7 +76,7 @@ public class LonelyTwitterActivity extends Activity {
                 addTweetTask.execute(latestTweet);
 
 
-	// http://stackoverflow.com/questions/11835251/remove-image-resource-of-imagebutton
+                // http://stackoverflow.com/questions/11835251/remove-image-resource-of-imagebutton
 
                 bodyText.setText("");
                 pictureButton.setImageResource(android.R.color.transparent);
@@ -97,7 +96,7 @@ public class LonelyTwitterActivity extends Activity {
 //        getTweetsTask.execute("test");
         getTweetsTask.execute("");
         try {
-            tweets = new ArrayList<Tweet>();
+            ArrayList<Tweet> tweets = new ArrayList<Tweet>();
             tweets.addAll(getTweetsTask.get());
             myTweets = new TweetList(tweets);
         } catch (InterruptedException e) {
@@ -107,18 +106,22 @@ public class LonelyTwitterActivity extends Activity {
         }
 
         //Count important tweets
-        numImportant = 0;
-        for ( Tweet aTweet: myTweets.getTweets() ){
-            if (aTweet.isImportant() == Boolean.TRUE){
-                numImportant++;
-            }
-        }
+        countthing();
 
 //        adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
         // Binds tweet list with view, so when our array updates, the view updates with it
         //adapter = new TweetAdapter(this, tweets); /* NEW! */
         adapter = new TweetAdapter(this, myTweets.getTweets());
         oldTweetsList.setAdapter(adapter);
+    }
+
+    private void countthing() {
+        numImportant = 0;
+        for ( Tweet aTweet: myTweets.getTweets() ){
+            if (aTweet.isImportant() == Boolean.TRUE){
+                numImportant++;
+            }
+        }
     }
 
     // http://developer.android.com/training/camera/photobasics.html

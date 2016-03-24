@@ -20,7 +20,7 @@ public class TweetList {
         return tweets;
     }
 
-    public void add(Tweet tweet){
+    public void addStuff(Tweet tweet){
         tweets.add(tweet);
     }
 
